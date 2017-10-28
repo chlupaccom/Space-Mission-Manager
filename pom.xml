@@ -34,5 +34,9 @@
         </dependencies>
     </dependencyManagement>
 
+    <modules>
+        <module>spaceMissionManager-persistance</module>
+    </modules>
+
 
 </project>
