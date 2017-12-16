@@ -5,7 +5,6 @@ import cz.muni.fi.dao.MissionDao;
 import cz.muni.fi.dao.UserDao;
 import cz.muni.fi.entity.Mission;
 import cz.muni.fi.entity.User;
-import cz.muni.fi.services.UserService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,7 +15,6 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -189,7 +187,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         userService.acceptAssignedMission(u);
         assertThat(u.missionStatusPending()).isFalse();
-        assertThat(u.hasAcceptedMission()).isTrue();
+        assertThat(u.getAcceptedMission()).isTrue();
         assertThat(u.getExplanation()).isNullOrEmpty();
     }
 
@@ -217,7 +215,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         User u = prepareAstronautWithMission();
         userService.rejectAssignedMission(u,"Because cake is a lie");
         assertThat(u.missionStatusPending()).isFalse();
-        assertThat(u.hasAcceptedMission()).isFalse();
+        assertThat(u.getAcceptedMission()).isFalse();
         assertThat(u.getExplanation()).isNotNull().isNotEmpty().isEqualTo("Because cake is a lie");
     }
 
@@ -334,7 +332,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         m.addAstronaut(u);
         missionDao.createMission(m);
 
-        assertThat(u.hasAcceptedMission()).isFalse();
+        assertThat(u.getAcceptedMission()).isFalse();
         assertThat(u.missionStatusPending()).isTrue();
         return u;
     }

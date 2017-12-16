@@ -148,4 +148,10 @@ public class MissionFacadeImplTest extends AbstractTestNGSpringContextTests {
 		assertThat(missionFacade.findMissionById(mission1.getId())).isEqualToComparingFieldByField(mission1);
 	}
 
+	@Test
+	public void testArchive() throws Exception {
+		missionFacade.archive(mission1, LocalDate.now().minusDays(6));
+		assertThat(missionFacade.findMissionById(mission1.getId())).hasFieldOrPropertyWithValue("active", false);
+		assertThat(missionFacade.findMissionById(mission1.getId()).getResult()).isNotEmpty();
+	}
 }

@@ -82,4 +82,14 @@ public class CraftComponent {
 	public int hashCode() {
 		return getName() != null ? getName().hashCode() : 0;
 	}
+
+
+	@Override
+	public String toString() {
+		return "CraftComponent{" +
+				", readyToUse=" + readyToUse +
+				", name='" + name + '\'' +
+				", readyDate=" + readyDate +
+				'}';
+	}
 }

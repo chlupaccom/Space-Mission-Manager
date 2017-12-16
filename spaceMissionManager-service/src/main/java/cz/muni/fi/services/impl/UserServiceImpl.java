@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
         }
         if(user.missionStatusPending()){
             user.setExplanation(explanation);
+            user.setMission(null);
         } else {
             throw new IllegalArgumentException("This user does not have pending mission status.");
         }

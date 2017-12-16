@@ -1,5 +1,10 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.muni.fi.config.LocalDateDeserializer;
+import cz.muni.fi.config.LocalDateSerializer;
+
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -10,6 +15,8 @@ public class UserCreateDTO {
 
 	@NotNull
 	@Past
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate birthDate;
 
 	@NotNull

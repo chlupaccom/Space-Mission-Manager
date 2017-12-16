@@ -83,4 +83,13 @@ public class Spacecraft {
 	public int hashCode() {
 		return getName() != null ? getName().hashCode() : 0;
 	}
+
+	@Override
+	public String toString() {
+		return "Spacecraft{" +
+				"type='" + type + '\'' +
+				", name='" + name + '\'' +
+				", components=" + components +
+				'}';
+	}
 }

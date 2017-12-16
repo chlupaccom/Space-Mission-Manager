@@ -21,7 +21,17 @@ public class UserFacadeImpl implements UserFacade {
     @Autowired
     UserService userService;
 
-    @Override
+	@Override
+	public void acceptAssignedMission(UserDTO user) {
+		userService.acceptAssignedMission(beanMappingService.mapTo(user, User.class));
+	}
+
+	@Override
+	public void rejectAssignedMission(UserDTO user, String explanation) {
+		userService.rejectAssignedMission(beanMappingService.mapTo(user, User.class), explanation);
+	}
+
+	@Override
     public Long addUser(UserCreateDTO user) {
         User mappedUser = beanMappingService.mapTo(user, User.class);
         userService.addUser(mappedUser);

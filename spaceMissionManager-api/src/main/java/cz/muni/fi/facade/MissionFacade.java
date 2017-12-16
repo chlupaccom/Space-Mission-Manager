@@ -3,9 +3,18 @@ package cz.muni.fi.facade;
 import cz.muni.fi.dto.MissionCreateDTO;
 import cz.muni.fi.dto.MissionDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MissionFacade {
+	/**
+	 * Archives given mission.
+	 * Sets the mission's end date and result - saving attributes of the mission object.
+	 * Result string will contain all details about the completed mission.
+	 * @param mission mission to archive
+	 * @param endDate end date of the mission. Must be in the past, not in the future
+	 */
+	void archive(MissionDTO mission, LocalDate endDate);
 
 	/**
 	 * Save given mission

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,7 +23,12 @@ public class MissionFacadeImpl implements MissionFacade {
     @Autowired
     MissionService missionService;
 
-    @Override
+	@Override
+	public void archive(MissionDTO mission, LocalDate endDate) {
+		missionService.archive(beanMappingService.mapTo(mission, Mission.class), endDate);
+	}
+
+	@Override
     public Long createMission(MissionCreateDTO mission) {
         Mission mappedMission = beanMappingService.mapTo(mission, Mission.class);
         missionService.createMission(mappedMission);

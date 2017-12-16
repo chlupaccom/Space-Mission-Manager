@@ -1,5 +1,12 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.muni.fi.config.LocalDateDeserializer;
+import cz.muni.fi.config.LocalDateSerializer;
+import cz.muni.fi.config.ZonedDateTimeDeserializer;
+import cz.muni.fi.config.ZonedDateTimeSerializer;
+
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +34,8 @@ public class MissionCreateDTO {
 
 	@NotNull
 	@Future
+	@JsonDeserialize(using = ZonedDateTimeDeserializer.class)
+	@JsonSerialize(using = ZonedDateTimeSerializer.class)
 	private ZonedDateTime eta;
 
 	@NotNull
@@ -36,6 +45,9 @@ public class MissionCreateDTO {
 
 	private boolean active;
 	private String result;
+
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate endDate;
 
 

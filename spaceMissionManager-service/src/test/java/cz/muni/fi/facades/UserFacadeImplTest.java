@@ -13,8 +13,6 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZonedDateTime;
@@ -167,4 +165,41 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         assertThat(userFacade.findAllAvailableAstronauts()).hasSize(sizeBefore+1);
     }
 
+	@Test
+	public void testAcceptMission() throws Exception {
+		MissionCreateDTO missionCreateDTO = TestUtils.getMissionCreateDTO("Enterprise");
+		CraftComponentCreateDTO craftComponentCreateDTO = TestUtils.getCraftComponentCreateDTO("Enterprise");
+		Long componentId = craftComponentFacade.addComponent(craftComponentCreateDTO);
+		SpacecraftCreateDTO spacecraftCreateDTO = TestUtils.getSpacecraftCreateDTO("Enterprise");
+		spacecraftCreateDTO.setComponents(Collections.singleton(craftComponentFacade.findComponentById(componentId)));
+		missionCreateDTO.setSpacecrafts(Collections.singleton(spacecraftFacade.findSpacecraftById(spacecraftFacade.addSpacecraft(spacecraftCreateDTO))));
+		Long id = missionFacade.createMission(missionCreateDTO);
+		UserCreateDTO userCreateDTO = createUser();
+		userCreateDTO.setEmail("ASH@mail.com");
+		userCreateDTO.setMission(missionFacade.findMissionById(id));
+		Long us = userFacade.addUser(userCreateDTO);
+		userFacade.acceptAssignedMission(userFacade.findUserById(us));
+		assertThat(userFacade.findUserById(us).getMission()).isNotNull();
+		assertThat(userFacade.findUserById(us).getAcceptedMission()).isTrue();
+
+	}
+
+	@Test
+	public void testRejectMission() throws Exception {
+		MissionCreateDTO missionCreateDTO = TestUtils.getMissionCreateDTO("Enterprise");
+		CraftComponentCreateDTO craftComponentCreateDTO = TestUtils.getCraftComponentCreateDTO("Enterprise");
+		Long componentId = craftComponentFacade.addComponent(craftComponentCreateDTO);
+		SpacecraftCreateDTO spacecraftCreateDTO = TestUtils.getSpacecraftCreateDTO("Enterprise");
+		spacecraftCreateDTO.setComponents(Collections.singleton(craftComponentFacade.findComponentById(componentId)));
+		missionCreateDTO.setSpacecrafts(Collections.singleton(spacecraftFacade.findSpacecraftById(spacecraftFacade.addSpacecraft(spacecraftCreateDTO))));
+		Long id = missionFacade.createMission(missionCreateDTO);
+		UserCreateDTO userCreateDTO = createUser();
+		userCreateDTO.setEmail("ASH@mail.com");
+		userCreateDTO.setMission(missionFacade.findMissionById(id));
+		Long us = userFacade.addUser(userCreateDTO);
+		userFacade.rejectAssignedMission(userFacade.findUserById(us), "My mom won't let me go.");
+		assertThat(userFacade.findUserById(us).getMission()).isNull();
+		assertThat(userFacade.findUserById(us).getAcceptedMission()).isFalse();
+
+	}
 }

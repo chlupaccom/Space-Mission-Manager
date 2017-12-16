@@ -1,5 +1,10 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.muni.fi.config.ZonedDateTimeDeserializer;
+import cz.muni.fi.config.ZonedDateTimeSerializer;
+
 import java.time.ZonedDateTime;
 
 public class CraftComponentDTO {
@@ -11,6 +16,8 @@ public class CraftComponentDTO {
 
 	private SpacecraftDTO spacecraft;
 
+	@JsonDeserialize(using = ZonedDateTimeDeserializer.class)
+	@JsonSerialize(using = ZonedDateTimeSerializer.class)
 	private ZonedDateTime readyDate;
 
 
